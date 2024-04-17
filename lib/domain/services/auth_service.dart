@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:hotel/domain/models/user_model.dart';
 
 class AuthService {
@@ -20,4 +21,6 @@ class AuthService {
       return null;
     }
   }
+
+  signInWithEmailAndPassword(BuildContext context, String email, String password) {}
 }

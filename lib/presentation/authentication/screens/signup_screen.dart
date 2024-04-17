@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:hotel/presentation/authentication/screens/profile_screen.dart';
+import 'package:hotel/presentation/authentication/screens/login_screen.dart';
 import 'package:hotel/presentation/authentication/widgets/logo.dart';
 import 'package:provider/provider.dart';
 import 'package:hotel/providers/auth_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+  const SignUpScreen({Key? key}) : super(key: key);
+
   @override
   State<SignUpScreen> createState() => _CreateUserScreenState();
 }
 
 class _CreateUserScreenState extends State<SignUpScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
@@ -47,17 +49,26 @@ class _CreateUserScreenState extends State<SignUpScreen> {
               obscureText: true,
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 String email = _emailController.text.trim();
                 String password = _passwordController.text.trim();
-                context.read<AuthProvider>().createUserWithEmailAndPassword(
-                      email,
-                      password,
-                    );
-                Navigator.pushReplacement(
+
+                try {
+                  UserCredential userCredential = await FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                    email: email,
+                    password: password,
+                  );
+                  // Optionally, you can do something after successful sign-up
+                  Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const ProfileScreen()));
+                    MaterialPageRoute(builder: (context) => const LoginScreen()),
+                  );
+                } catch (e) {
+                  // Handle sign-up failure
+                  print('Error signing up: $e');
+                  // Optionally, display an error message to the user
+                }
               },
               child: const Text('Sign Up'),
             ),

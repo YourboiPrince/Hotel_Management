@@ -17,4 +17,6 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  signInWithEmailAndPassword(BuildContext context, String email, String password) {}
 }
