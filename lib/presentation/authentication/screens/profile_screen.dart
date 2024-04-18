@@ -5,6 +5,7 @@ import 'package:hotel/domain/models/user_model.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: true);
@@ -20,6 +21,13 @@ class ProfileScreen extends StatelessWidget {
             Text(
               'Welcome, ${user?.email ?? 'Guest'}',
               style: const TextStyle(fontSize: 20),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate back to the login screen
+                Navigator.pop(context);
+              },
+              child: const Text('Logout'),
             ),
           ],
         ),
