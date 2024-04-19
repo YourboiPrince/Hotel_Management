@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:hotel/presentation/authentication/screens/login_screen.dart';
-import 'package:hotel/presentation/authentication/widgets/logo.dart';
-import 'package:hotel/providers/auth_provider.dart' as hotel_provider;
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart'; // Import Flutter material library
+import 'package:hotel/presentation/authentication/screens/login_screen.dart'; // Import login screen
+import 'package:hotel/presentation/authentication/widgets/logo.dart'; // Import logo widget
+import 'package:hotel/providers/auth_provider.dart' as hotel_provider; // Import authentication provider as hotel_provider
+import 'package:firebase_auth/firebase_auth.dart'; // Import FirebaseAuth library
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -12,13 +12,13 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController(); // Controller for email field
+  final TextEditingController _passwordController = TextEditingController(); // Controller for password field
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    _emailController.dispose(); // Dispose email controller
+    _passwordController.dispose(); // Dispose password controller
     super.dispose();
   }
 
@@ -26,10 +26,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign Up'),
+        title: const Text('Sign Up'), // Set app bar title
       ),
       body: Container(
-        color: Colors.purple,
+        color: Colors.purple, // Purple background color
         padding: const EdgeInsets.all(16.0),
         child: Center(
           child: SingleChildScrollView(
@@ -38,7 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const LogoWidget(),
+                  const LogoWidget(), // Display logo widget
                   TextFormField(
                     controller: _emailController,
                     decoration: const InputDecoration(
@@ -48,7 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       fillColor: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 16), // SizedBox for spacing
                   TextFormField(
                     controller: _passwordController,
                     decoration: const InputDecoration(
@@ -57,12 +57,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       filled: true,
                       fillColor: Colors.white,
                     ),
-                    obscureText: true,
+                    obscureText: true, // Hide password text
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      String email = _emailController.text.trim();
-                      String password = _passwordController.text.trim();
+                      String email = _emailController.text.trim(); // Get email input
+                      String password = _passwordController.text.trim(); // Get password input
 
                       try {
                         // Create user with FirebaseAuth
@@ -74,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         // For example, update user data in your AuthProvider
                         hotel_provider.AuthProvider()
                             // ignore: use_build_context_synchronously
-                            .createUserWithEmailAndPassword(context,email, password);
+                            .createUserWithEmailAndPassword(context, email, password);
                         Navigator.pushReplacement(
                           // ignore: use_build_context_synchronously
                           context,
@@ -88,7 +88,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         // Optionally, display an error message to the user
                       }
                     },
-                    child: const Text('Sign Up'),
+                    child: const Text('Sign Up'), // Sign up button
                   ),
                 ],
               ),

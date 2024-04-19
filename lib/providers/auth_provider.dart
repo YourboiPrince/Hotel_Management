@@ -1,17 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:hotel/domain/services/auth_service.dart';
-import 'package:hotel/domain/models/user_model.dart';
+import 'package:flutter/material.dart'; // Import Flutter material library
+import 'package:hotel/domain/services/auth_service.dart'; // Import authentication service
+import 'package:hotel/domain/models/user_model.dart'; // Import user model
 
 class AuthProvider extends ChangeNotifier {
-  final AuthService _authService = AuthService();
-  UserModel? _user;
-  String? _errorMessage;
-  bool _isLoggedIn = false; // Add a boolean variable to track login status
+  final AuthService _authService = AuthService(); // Authentication service instance
+  UserModel? _user; // Current user
+  String? _errorMessage; // Error message
+  bool _isLoggedIn = false; // Track login status
 
-  UserModel? get user => _user;
-  String? get errorMessage => _errorMessage;
-  bool get isLoggedIn => _isLoggedIn; // Expose the login status
+  UserModel? get user => _user; // Getter for current user
+  String? get errorMessage => _errorMessage; // Getter for error message
+  bool get isLoggedIn => _isLoggedIn; // Getter for login status
 
+  // Create user with email and password
   Future<void> createUserWithEmailAndPassword(
       BuildContext context, String email, String password) async {
     UserModel? createdUser = await _authService.createUserWithEmailAndPassword(
@@ -27,6 +28,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  // Sign in with email and password
   Future<void> signInWithEmailAndPassword(
       BuildContext context, String email, String password) async {
     UserModel? signedInUser =

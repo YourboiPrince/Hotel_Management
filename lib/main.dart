@@ -1,22 +1,22 @@
-import 'package:flutter/material.dart';
-import 'package:hotel/presentation/authentication/screens/signUp_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:hotel/presentation/home/home_screen.dart';
-import 'core/theme/theme.dart';
-import 'firebase_options.dart';
-import 'package:provider/provider.dart';
-import 'package:hotel/providers/auth_provider.dart';
-import 'package:hotel/presentation/authentication/screens/login_screen.dart';
-import 'package:hotel/presentation/authentication/screens/profile_screen.dart'; 
+import 'package:flutter/material.dart'; // Import Flutter material library
+import 'package:hotel/presentation/authentication/screens/signUp_screen.dart'; // Import sign up screen
+import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core library
+import 'package:hotel/presentation/home/home_screen.dart'; // Import home screen
+import 'core/theme/theme.dart'; // Import theme
+import 'firebase_options.dart'; // Import Firebase options
+import 'package:provider/provider.dart'; // Import Provider package
+import 'package:hotel/providers/auth_provider.dart'; // Import authentication provider
+import 'package:hotel/presentation/authentication/screens/login_screen.dart'; // Import login screen
+import 'package:hotel/presentation/authentication/screens/profile_screen.dart'; // Import profile screen
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
+  ); // Initialize Firebase
   runApp(
     ChangeNotifierProvider(
-      create: (context) => AuthProvider(),
+      create: (context) => AuthProvider(), // Provide authentication provider
       child: const Hotel(),
     ),
   );
@@ -28,16 +28,16 @@ class Hotel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Hotel Card',
-      theme: AppTheme.theme,
-      initialRoute: '/',
+      debugShowCheckedModeBanner: false, // Hide debug banner
+      title: 'Hotel Card', // App title
+      theme: AppTheme.theme, // Set app theme
+      initialRoute: '/', // Initial route
       routes: {
         '/': (context) => const HotelScreen(), // This is the screen with the container cards
-        '/home': (context) => const MyHomePage(title: 'Hotel Page'),
-        '/signUp': (context) => const SignUpScreen(),
-        '/login': (context) => const LoginScreen(),
-        '/profile': (context) => const ProfileScreen(),
+        '/home': (context) => const MyHomePage(title: 'Hotel Page'), // Home screen
+        '/signUp': (context) => const SignUpScreen(), // Sign up screen
+        '/login': (context) => const LoginScreen(), // Login screen
+        '/profile': (context) => const ProfileScreen(), // Profile screen
       },
     );
   }
@@ -50,7 +50,7 @@ class HotelScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hotel Management'),
+        title: const Text('Hotel Management'), // Set app bar title
       ),
       body: Container(
         padding: const EdgeInsets.all(8.0),
@@ -65,19 +65,19 @@ class HotelScreen extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.login),
+            icon: Icon(Icons.login), // Login icon
             label: 'Login',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_add),
+            icon: Icon(Icons.person_add), // Sign up icon
             label: 'Sign Up',
           ),
         ],
         onTap: (index) {
           if (index == 0) {
-            Navigator.pushNamed(context, '/login');
+            Navigator.pushNamed(context, '/login'); // Navigate to login screen
           } else if (index == 1) {
-            Navigator.pushNamed(context, '/signUp');
+            Navigator.pushNamed(context, '/signUp'); // Navigate to sign up screen
           }
         },
       ),
