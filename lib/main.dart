@@ -7,13 +7,18 @@ import 'firebase_options.dart'; // Import Firebase options
 import 'package:provider/provider.dart'; // Import Provider package
 import 'package:hotel/providers/auth_provider.dart'; // Import authentication provider
 import 'package:hotel/presentation/authentication/screens/login_screen.dart'; // Import login screen
-import 'package:hotel/presentation/authentication/screens/profile_screen.dart'; // Import profile screen
+import 'package:hotel/presentation/authentication/screens/profile_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ); // Initialize Firebase
+
+  // Initialize Firestore
+  FirebaseFirestore.instance.settings = const Settings(persistenceEnabled: true);
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => AuthProvider(), // Provide authentication provider
