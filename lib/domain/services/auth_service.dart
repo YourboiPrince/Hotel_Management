@@ -100,4 +100,6 @@ class AuthService {
       return null;
     }
   }
+
+  signOut(BuildContext context) {}
 }

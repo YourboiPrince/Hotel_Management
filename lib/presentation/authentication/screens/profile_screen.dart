@@ -4,7 +4,6 @@ import 'package:hotel/presentation/home/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:hotel/providers/auth_provider.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-
 import 'package:hotel/domain/models/user_model.dart';
 
 class ProfileScreen extends StatelessWidget {

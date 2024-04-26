@@ -5,7 +5,7 @@ import 'package:hotel/presentation/home/room_details_screen.dart';
 class HotelRoomsScreen extends StatelessWidget {
   final Hotel hotel;
 
-  const HotelRoomsScreen({super.key, required this.hotel});
+  const HotelRoomsScreen({super.key, required this.hotel, required Type Hotel});
 
   @override
   Widget build(BuildContext context) {
