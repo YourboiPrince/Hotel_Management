@@ -4,7 +4,7 @@ import 'package:hotel/domain/models/room_model.dart';
 class RoomDetailsScreen extends StatelessWidget {
   final Room room;
 
-  const RoomDetailsScreen({super.key, required this.room});
+  const RoomDetailsScreen({super.key, required this.room, required Type Room});
 
   @override
   Widget build(BuildContext context) {

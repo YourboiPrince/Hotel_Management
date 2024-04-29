@@ -8,7 +8,11 @@ import 'package:provider/provider.dart'; // Import Provider package
 import 'package:hotel/providers/auth_provider.dart'; // Import authentication provider
 import 'package:hotel/presentation/authentication/screens/login_screen.dart'; // Import login screen
 import 'package:hotel/presentation/authentication/screens/profile_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
+import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'presentation/home/add_hotels_screen.dart';
+// import 'providers/admin_provider.dart';
+import 'presentation/authentication/screens/admin_screen.dart';
+ // Import Firestore
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +46,9 @@ class Hotel extends StatelessWidget {
         '/home': (context) => const MyHomePage(title: 'Hotel Page'), // Home screen
         '/signUp': (context) => const SignUpScreen(), // Sign up screen
         '/login': (context) => const LoginScreen(), // Login screen
-        '/profile': (context) => const ProfileScreen(), // Profile screen
+        '/profile': (context) => const ProfileScreen(),
+         '/admin': (context) => AdminScreen(),
+        // '/addHotels': (context) => const AddHotelScreen(), // Profile screen
       },
     );
   }

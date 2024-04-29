@@ -75,6 +75,12 @@ class _CreateUserScreenState extends State<LoginScreen> {
                   },
                   child: const Text('Login'), // Login button
                 ),
+                 TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/admin');
+              },
+              child: const Text('Login as admin'),
+            ),
               ],
             ),
           ),
