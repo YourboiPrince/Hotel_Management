@@ -1,15 +1,15 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:hotel/presentation/authentication/widgets/logo.dart';
 import 'package:provider/provider.dart';
 
-import '../../../providers/admin_provider.dart';
+import '../../providers/admin_provider.dart';
 
 class AdminScreen extends StatelessWidget {
-  AdminScreen({super.key});
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  // ignore: use_super_parameters
+  AdminScreen({Key? key}) : super(key: key); // Fix the constructor syntax
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +40,17 @@ class AdminScreen extends StatelessWidget {
               onPressed: () async {
                 String email = _emailController.text.trim();
                 String password = _passwordController.text.trim();
-                // Pass the current context to the AdminProvider
-                await context
-                    .read<AdminProvider>()
-                    .signInWithEmailAndPassword(context, email, password);
-                // Check if the user is created successfully
-                Navigator.pushNamed(context, '/addHotels');
+                try {
+                  // SignInWithEmailAndPassword should return a Future
+                  await context
+                      .read<AdminProvider>()
+                      .signInWithEmailAndPassword(context, email, password); // Remove context parameter
+                  // Navigate only if the sign-in is successful
+                  Navigator.pushNamed(context, '/addHotels');
+                } catch (error) {
+                  // Handle sign-in errors here
+                  print('Sign-in error: $error');
+                }
               },
               child: const Text('Login'),
             ),

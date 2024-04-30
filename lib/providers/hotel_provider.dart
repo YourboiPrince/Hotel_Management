@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+
 
 import '../data/dummy.dart';
 import '../domain/models/hotel_model.dart';
@@ -6,13 +7,11 @@ import '../domain/services/hotel_service.dart';
 
 class HotelProvider extends ChangeNotifier {
   final HotelService _hotelService = HotelService();
-//initialize an empty list of hotels
-  List<Hotel> _hotels = [];
-  //getter for the hotels list
-  List<Hotel> get hotels => _hotels;
-/*
-**All the methods below are from the HotelService class
-*/
+  // Create an instance of UserService
+
+  List _hotels = [];
+  List get hotels => _hotels;
+
   Future<void> fetchHotels() async {
     try {
       _hotels = await _hotelService.getHotels();
@@ -28,7 +27,9 @@ class HotelProvider extends ChangeNotifier {
       _hotels.add(hotel);
       notifyListeners();
     } catch (e) {
-      print('Error adding hotel: $e');
+      if (kDebugMode) {
+        print('Error adding hotel: $e');
+      }
     }
   }
 
@@ -53,7 +54,6 @@ class HotelProvider extends ChangeNotifier {
     }
   }
 
-  //call the setHotels method from the HotelService class
   Future<void> setHotels() async {
     try {
       await _hotelService.setHotels(dummyHotels);

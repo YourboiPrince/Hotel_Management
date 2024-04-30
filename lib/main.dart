@@ -2,6 +2,8 @@ import 'package:flutter/material.dart'; // Import Flutter material library
 import 'package:hotel/presentation/authentication/screens/signUp_screen.dart'; // Import sign up screen
 import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core library
 import 'package:hotel/presentation/home/home_screen.dart'; // Import home screen
+import 'package:hotel/providers/admin_provider.dart';
+import 'package:hotel/providers/hotel_provider.dart';
 import 'core/theme/theme.dart'; // Import theme
 import 'firebase_options.dart'; // Import Firebase options
 import 'package:provider/provider.dart'; // Import Provider package
@@ -9,9 +11,11 @@ import 'package:hotel/providers/auth_provider.dart'; // Import authentication pr
 import 'package:hotel/presentation/authentication/screens/login_screen.dart'; // Import login screen
 import 'package:hotel/presentation/authentication/screens/profile_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'presentation/home/add_hotels_screen.dart';
+import 'presentation/dashboard/add_hotels_screen.dart';
 // import 'providers/admin_provider.dart';
-import 'presentation/authentication/screens/admin_screen.dart';
+// import 'package:hotel/providers/hotel_provider.dart';
+import 'presentation/home/admin_screen.dart';
+import 'providers/bottom_navigation_provider.dart';
  // Import Firestore
 
 Future<void> main() async {
@@ -24,10 +28,20 @@ Future<void> main() async {
   FirebaseFirestore.instance.settings = const Settings(persistenceEnabled: true);
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => AuthProvider(), // Provide authentication provider
+   MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(
+            create: (context) => BottomNavigationBarProvider()),
+        ChangeNotifierProvider(
+          create: (context) => AdminProvider(),
+        ),
+        ChangeNotifierProvider(create: (_)=> HotelProvider()),
+      ],
+    
       child: const Hotel(),
     ),
+       
   );
 }
 
@@ -48,7 +62,7 @@ class Hotel extends StatelessWidget {
         '/login': (context) => const LoginScreen(), // Login screen
         '/profile': (context) => const ProfileScreen(),
          '/admin': (context) => AdminScreen(),
-        // '/addHotels': (context) => const AddHotelScreen(), // Profile screen
+        '/addHotels': (context) => const AddHotelScreen(), // Profile screen
       },
     );
   }
