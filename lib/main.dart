@@ -16,7 +16,7 @@ import 'presentation/dashboard/add_hotels_screen.dart';
 // import 'package:hotel/providers/hotel_provider.dart';
 import 'presentation/home/admin_screen.dart';
 import 'providers/bottom_navigation_provider.dart';
- // Import Firestore
+// import 'package:flutter_svg/flutter_svg.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,7 +56,7 @@ class Hotel extends StatelessWidget {
       theme: AppTheme.theme, // Set app theme
       initialRoute: '/', // Initial route
       routes: {
-        '/': (context) => const HotelScreen(), // This is the screen with the container cards
+        '/': (context) => HotelScreen(), // This is the screen with the container cards
         '/home': (context) => const MyHomePage(title: 'Hotel Page'), // Home screen
         '/signUp': (context) => const SignUpScreen(), // Sign up screen
         '/login': (context) => const LoginScreen(), // Login screen
@@ -69,7 +69,21 @@ class Hotel extends StatelessWidget {
 }
 
 class HotelScreen extends StatelessWidget {
-  const HotelScreen({Key? key}) : super(key: key);
+  final List<String> descriptions = [
+    'DUBAI',
+    'RWANDA',
+    'KENYA',
+    'SINGAPORE',
+  ];
+
+  final List<String> imagePaths = [
+    'assets/images/image.jpg',
+    'assets/images/Frame.jpg',
+    'assets/images/Frame.jpg',
+    'assets/images/image.jpg',
+  ];
+
+  HotelScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -77,14 +91,66 @@ class HotelScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Hotel Management'), // Set app bar title
       ),
-      body: Container(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.count(
-          crossAxisCount: 2,
-          children: List.generate(
-            6,
-            (index) => ContainerCard(),
-          ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Your existing content here...
+            Container(
+              width: double.infinity,
+              height: 200, // Adjust the height as needed
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/hotel_image.jpg'), // Path to your image file
+                  fit: BoxFit.fill, // Ensure the image fills the container without distorting its aspect ratio
+                ),
+              ),
+            ),
+            const SizedBox(height: 20), // Add some space between the image and the bottom navigation bar
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                'Popular Places',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20), // Add some space between the title and the cards
+            Wrap(
+              spacing: 20, // Spacing between the cards
+              runSpacing: 20, // Spacing between the rows of cards
+              alignment: WrapAlignment.start,
+              children: List.generate(
+                4,
+                (index) => SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.4, // Adjust the width according to your design
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          imagePaths[index],
+                          width: double.infinity,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(descriptions[index]),
+                        const SizedBox(height: 8),
+                        TextButton(
+                          onPressed: () {
+                            // Implement action to edit description
+                          },
+                          child: Text('BOOK NOW'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -106,6 +172,27 @@ class HotelScreen extends StatelessWidget {
           }
         },
       ),
+      persistentFooterButtons: [
+        Container(
+          width: 1512, // Width according to your requirement
+          height: 355, // Height according to your requirement
+          color: Colors.grey[200], // Background color of the footer
+
+          // Content of the footer
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Adjust as needed
+            children: [
+              // Add only Facebook icon here
+              IconButton(
+                icon: const Icon(Icons.facebook), // Example Facebook icon
+                onPressed: () {
+                  // Implement action for Facebook
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

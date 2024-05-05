@@ -7,7 +7,7 @@ import 'package:hotel/presentation/home/home_screen.dart';
 import '../../providers/hotel_provider.dart';
 
 class AddHotelScreen extends StatefulWidget {
-  const AddHotelScreen({Key? key}) : super(key: key);
+  const AddHotelScreen({super.key});
 
   @override
   State<AddHotelScreen> createState() => _AddHotelScreenState();
@@ -46,177 +46,185 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
       appBar: AppBar(
         title: const Text('Upload'),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Name',
-                ),
-                controller: nameController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a name';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Location',
-                ),
-                controller: locationController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a location';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              Slider(
-                value: rating,
-                min: 0.0,
-                max: 5.0,
-                divisions: 10,
-                label: 'Rating ($rating)',
-                onChanged: (newRating) {
-                  setState(() => rating = newRating);
-                },
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Image URL',
-                ),
-                controller: imageUrlController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter an image URL';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              ElevatedButton(
-                onPressed: () => showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Add Room'),
-                      content: Form(
-                        key: _roomformKey,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: 'Room Type',
-                              ),
-                              controller: type,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter room type';
-                                }
-                                return null;
-                              },
+      body: Container(
+        decoration: const BoxDecoration(
+          color: Colors.purple, // Set purple color as the background
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          child: Center(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Name',
+                    ),
+                    controller: nameController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a name';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Location',
+                    ),
+                    controller: locationController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a location';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  Slider(
+                    value: rating,
+                    min: 0.0,
+                    max: 5.0,
+                    divisions: 10,
+                    label: 'Rating ($rating)',
+                    onChanged: (newRating) {
+                      setState(() => rating = newRating);
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Image URL',
+                    ),
+                    controller: imageUrlController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter an image URL';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  ElevatedButton(
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Add Room'),
+                          content: Form(
+                            key: _roomformKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextFormField(
+                                  decoration: const InputDecoration(
+                                    labelText: 'Room Type',
+                                  ),
+                                  controller: type,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter room type';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 30.0,
+                                ),
+                                TextFormField(
+                                  decoration: const InputDecoration(
+                                    labelText: 'Rate',
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  controller: TextEditingController(
+                                      text: roomRate.toString()),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter room rate';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (newValue) =>
+                                      roomRate = double.parse(newValue!),
+                                ),
+                                const SizedBox(
+                                  height: 30.0,
+                                ),
+                                SwitchListTile(
+                                  title: const Text('Available'),
+                                  value: isRoomAvailable,
+                                  onChanged: (value) =>
+                                      setState(() => isRoomAvailable = value),
+                                ),
+                              ],
                             ),
-                            const SizedBox(
-                              height: 30.0,
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('Cancel'),
                             ),
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: 'Rate',
-                              ),
-                              keyboardType: TextInputType.number,
-                              controller: TextEditingController(
-                                  text: roomRate.toString()),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter room rate';
-                                }
-                                return null;
-                              },
-                              onSaved: (newValue) =>
-                                  roomRate = double.parse(newValue!),
-                            ),
-                            const SizedBox(
-                              height: 30.0,
-                            ),
-                            SwitchListTile(
-                              title: const Text('Available'),
-                              value: isRoomAvailable,
-                              onChanged: (value) =>
-                                  setState(() => isRoomAvailable = value),
+                            TextButton(
+                              onPressed: addNewRoom,
+                              child: const Text('Add'),
                             ),
                           ],
-                        ),
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: addNewRoom,
-                          child: const Text('Add'),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-                child: const Text('Add Room'),
+                        );
+                      },
+                    ),
+                    child: const Text('Add Room'),
+                  ),
+                  const Text('Rooms:'),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: rooms.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(rooms[index].type),
+                        subtitle: Text('Rate: ${rooms[index].rate}'),
+                        trailing: Text(rooms[index].isAvailable ? 'Available' : 'Not Available'),
+                      );
+                    },
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        String name = nameController.text;
+                        String location = locationController.text;
+                        String imageUrl = imageUrlController.text;
+                        Hotel hotel = Hotel(
+                          name: name,
+                          location: location,
+                          imageUrl: imageUrl,
+                          rating: rating,
+                          rooms: rooms,
+                          id: 0, // Provide a default value for id here or set it dynamically later
+                        );
+                        context.read<HotelProvider>().addHotel(hotel);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MyHomePage(title: 'Hotel Page'),
+                          ),
+                        );
+                      }
+                    },
+                    child: const Text('Submit'),
+                  ),
+                ],
               ),
-              const Text('Rooms:'),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: rooms.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(rooms[index].type),
-                    subtitle: Text('Rate: ${rooms[index].rate}'),
-                    trailing: Text(rooms[index].isAvailable ? 'Available' : 'Not Available'),
-                  );
-                },
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    String name = nameController.text;
-                    String location = locationController.text;
-                    String imageUrl = imageUrlController.text;
-                    Hotel hotel = Hotel(
-                      name: name,
-                      location: location,
-                      imageUrl: imageUrl,
-                      rating: rating,
-                      rooms: rooms,
-                      id: 0, // Provide a default value for id here or set it dynamically later
-                    );
-                    context.read<HotelProvider>().addHotel(hotel);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MyHomePage(title: 'Hotel Page'),
-                      ),
-                    );
-                  }
-                },
-                child: const Text('Submit'),
-              ),
-            ],
+            ),
           ),
         ),
       ),

@@ -17,44 +17,59 @@ class AdminScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Admin'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            const LogoWidget(),
-            TextFormField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-              ),
+      body: Center( // Center the form horizontally and vertically
+        child: Container(
+          width: 450, // Set the width of the container
+          decoration: BoxDecoration(
+            color: Colors.purple, // Set purple color as the background
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center, // Center the form vertically
+              children: [
+                const LogoWidget(),
+                SizedBox(height: 16),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    fillColor: Colors.white,
+                    filled: true,
+                  ),
+                ),
+                SizedBox(height: 16),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    fillColor: Colors.white,
+                    filled: true,
+                  ),
+                  obscureText: true,
+                ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () async {
+                    String email = _emailController.text.trim();
+                    String password = _passwordController.text.trim();
+                    try {
+                      // SignInWithEmailAndPassword should return a Future
+                      await context
+                          .read<AdminProvider>()
+                          .signInWithEmailAndPassword(context, email, password); // Remove context parameter
+                      // Navigate only if the sign-in is successful
+                      Navigator.pushNamed(context, '/addHotels');
+                    } catch (error) {
+                      // Handle sign-in errors here
+                      print('Sign-in error: $error');
+                    }
+                  },
+                  child: const Text('Login'),
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: _passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-              ),
-              obscureText: true,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                String email = _emailController.text.trim();
-                String password = _passwordController.text.trim();
-                try {
-                  // SignInWithEmailAndPassword should return a Future
-                  await context
-                      .read<AdminProvider>()
-                      .signInWithEmailAndPassword(context, email, password); // Remove context parameter
-                  // Navigate only if the sign-in is successful
-                  Navigator.pushNamed(context, '/addHotels');
-                } catch (error) {
-                  // Handle sign-in errors here
-                  print('Sign-in error: $error');
-                }
-              },
-              child: const Text('Login'),
-            ),
-          ],
+          ),
         ),
       ),
     );
