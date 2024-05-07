@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotel/domain/models/hotel_model.dart';
+import 'package:hotel/presentation/home/room_details_screen.dart';
 // import 'package:hotel/presentation/home/room_details_screen.dart';
 
 class HotelRoomsScreen extends StatelessWidget {
@@ -25,13 +26,13 @@ class HotelRoomsScreen extends StatelessWidget {
               color: room.isAvailable ? Colors.green : Colors.red,
             ),
             onTap: () {
-              // // Navigate to the RoomDetailsScreen
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => RoomDetailsScreen(room: room),
-              //   ),
-              // );
+              // Navigate to the RoomDetailsScreen
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RoomDetailsScreen(room: room),
+                ),
+              );
             },
           );
         },

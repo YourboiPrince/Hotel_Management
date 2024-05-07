@@ -57,7 +57,7 @@ class Hotel extends StatelessWidget {
       initialRoute: '/', // Initial route
       routes: {
         '/': (context) => HotelScreen(), // This is the screen with the container cards
-        '/home': (context) => const MyHomePage(title: 'Hotel Page'), // Home screen
+        '/home': (context) => MyHomePage(title: 'Hotel Page'), // Home screen
         '/signUp': (context) => const SignUpScreen(), // Sign up screen
         '/login': (context) => const LoginScreen(), // Login screen
         '/profile': (context) => const ProfileScreen(),
@@ -174,15 +174,15 @@ class HotelScreen extends StatelessWidget {
       ),
       persistentFooterButtons: [
         Container(
-          width: 1512, // Width according to your requirement
-          height: 355, // Height according to your requirement
+          width: double.infinity, // Width takes up the entire screen width
+          height: 50, // Adjust the height as needed
           color: Colors.grey[200], // Background color of the footer
 
           // Content of the footer
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Adjust as needed
             children: [
-              // Add only Facebook icon here
+              // Add your social icons here
               IconButton(
                 icon: const Icon(Icons.facebook), // Example Facebook icon
                 onPressed: () {
@@ -212,9 +212,9 @@ class ContainerCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Text('Description'), // Add your description here
+          const Text('Description'), // Add your description here
           const SizedBox(height: 8),
-          Text('Price'), // Add your price here
+          const Text('Price'), // Add your price here
         ],
       ),
     );
