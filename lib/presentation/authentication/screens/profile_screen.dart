@@ -75,7 +75,9 @@ class ProfileScreen extends StatelessWidget {
               _listTiles(
                 title: 'Bookings',
                 icon: IconlyLight.bag,
-                onPressed: () {},
+                onPressed: () {
+                 Navigator.pushNamed(context, '/bookings'); // Navigate to the bookings screen
+                },
                 color: Colors.cyan,
               ),
               _listTiles(

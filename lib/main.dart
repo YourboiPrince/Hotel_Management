@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart'; // Import Flutter material library
 import 'package:hotel/presentation/authentication/screens/signUp_screen.dart'; // Import sign up screen
 import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core library
+import 'package:hotel/presentation/home/bookings_screen.dart';
 import 'package:hotel/presentation/home/home_screen.dart'; // Import home screen
 import 'package:hotel/providers/admin_provider.dart';
 import 'package:hotel/providers/hotel_provider.dart';
@@ -63,6 +64,7 @@ class Hotel extends StatelessWidget {
         '/profile': (context) => const ProfileScreen(),
          '/admin': (context) => AdminScreen(),
         '/addHotels': (context) => const AddHotelScreen(), // Profile screen
+         '/bookings': (context) => BookingsScreen(), // Bookings screen
       },
     );
   }
@@ -140,7 +142,7 @@ class HotelScreen extends StatelessWidget {
                         const SizedBox(height: 8),
                         TextButton(
                           onPressed: () {
-                            // Implement action to edit description
+                           Navigator.pushNamed(context, '/bookings'); // Navigate to the bookings screen
                           },
                           child: Text('BOOK NOW'),
                         ),
