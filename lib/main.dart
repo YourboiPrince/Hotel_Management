@@ -2,6 +2,7 @@ import 'package:flutter/material.dart'; // Import Flutter material library
 import 'package:hotel/presentation/authentication/screens/signUp_screen.dart'; // Import sign up screen
 import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core library
 import 'package:hotel/presentation/home/bookings_screen.dart';
+import 'package:hotel/presentation/home/checkout_screen.dart' as CheckoutScreen;
 import 'package:hotel/presentation/home/home_screen.dart'; // Import home screen
 import 'package:hotel/providers/admin_provider.dart';
 import 'package:hotel/providers/hotel_provider.dart';
@@ -13,11 +14,9 @@ import 'package:hotel/presentation/authentication/screens/login_screen.dart'; //
 import 'package:hotel/presentation/authentication/screens/profile_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'presentation/dashboard/add_hotels_screen.dart';
-// import 'providers/admin_provider.dart';
-// import 'package:hotel/providers/hotel_provider.dart';
 import 'presentation/home/admin_screen.dart';
 import 'providers/bottom_navigation_provider.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:mpesa_flutter_plugin/mpesa_flutter_plugin.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,8 +27,14 @@ Future<void> main() async {
   // Initialize Firestore
   FirebaseFirestore.instance.settings = const Settings(persistenceEnabled: true);
 
+// var dotenv;
+
+// MpesaFlutterPlugin.setConsumerKey(dotenv.env['MPESA_CONSUMER_KEY'] ?? '');
+//   MpesaFlutterPlugin.setConsumerSecret(
+//       dotenv.env['MPESA_CONSUMER_SECRET'] ?? '');
+
   runApp(
-   MultiProvider(
+    MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(
@@ -37,12 +42,11 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => AdminProvider(),
         ),
-        ChangeNotifierProvider(create: (_)=> HotelProvider()),
+        ChangeNotifierProvider(create: (_) => HotelProvider()),
       ],
-    
+
       child: const Hotel(),
     ),
-       
   );
 }
 
@@ -62,9 +66,10 @@ class Hotel extends StatelessWidget {
         '/signUp': (context) => const SignUpScreen(), // Sign up screen
         '/login': (context) => const LoginScreen(), // Login screen
         '/profile': (context) => const ProfileScreen(),
-         '/admin': (context) => AdminScreen(),
+        '/admin': (context) => AdminScreen(),
         '/addHotels': (context) => const AddHotelScreen(), // Profile screen
-         '/bookings': (context) => BookingsScreen(), // Bookings screen
+        '/bookings': (context) => const BookingsScreen(), // Bookings screen
+        '/checkout': (context) => const CheckoutScreen.CheckoutScreen(bookedRooms: []),
       },
     );
   }
@@ -91,7 +96,16 @@ class HotelScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hotel Management'), // Set app bar title
+        title: const Text('SIXXLVE 6-HOTEL'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_cart), // Cart icon
+            onPressed: () {
+              // Navigate to checkout screen
+              Navigator.pushNamed(context, '/checkout');
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -101,7 +115,7 @@ class HotelScreen extends StatelessWidget {
             Container(
               width: double.infinity,
               height: 200, // Adjust the height as needed
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/hotel_image.jpg'), // Path to your image file
                   fit: BoxFit.fill, // Ensure the image fills the container without distorting its aspect ratio
@@ -109,8 +123,8 @@ class HotelScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20), // Add some space between the image and the bottom navigation bar
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 'Popular Places',
                 style: TextStyle(
@@ -142,7 +156,7 @@ class HotelScreen extends StatelessWidget {
                         const SizedBox(height: 8),
                         TextButton(
                           onPressed: () {
-                           Navigator.pushNamed(context, '/bookings'); // Navigate to the bookings screen
+                            Navigator.pushNamed(context, '/bookings'); // Navigate to the bookings screen
                           },
                           child: Text('BOOK NOW'),
                         ),

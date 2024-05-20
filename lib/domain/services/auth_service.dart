@@ -1,18 +1,22 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase authentication library
-import 'package:hotel/domain/models/user_model.dart'; // Import user model
-import 'package:awesome_dialog/awesome_dialog.dart'; // Import Awesome Dialog library
-import 'package:flutter/material.dart'; 
-import 'package:cloud_firestore/cloud_firestore.dart';// Import Flutter material library
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hotel/domain/models/user_model.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/material.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // Create user with email and password
-  Future<UserModel?> createUserWithEmailAndPassword(BuildContext context,
-      String email, String password, String displayName) async {
+  Future<UserModel?> createUserWithEmailAndPassword(
+      BuildContext context,
+      String email,
+      String password,
+      String displayName,
+      int phoneNumber) async {
     try {
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
@@ -25,6 +29,7 @@ class AuthService {
         uid: userCredential.user!.uid,
         email: userCredential.user!.email ?? '',
         displayName: displayName,
+        phoneNumber: phoneNumber,
       );
       // Create a new user document in Firestore
       try {
@@ -39,7 +44,11 @@ class AuthService {
         rethrow;
       }
       return UserModel(
-          uid: user.uid, email: user.email ?? '', displayName: displayName);
+        uid: user.uid,
+        email: user.email ?? '',
+        displayName: displayName,
+        phoneNumber: phoneNumber,
+      );
     } on FirebaseAuthException catch (e) {
       // Handle specific FirebaseAuthException errors
       String errorMessage = '';
@@ -52,7 +61,7 @@ class AuthService {
           break;
         default:
           errorMessage = 'An error occurred while creating the user.';
-      }      // Show error message dialog
+      }
       AwesomeDialog(
         context: context,
         dialogType: DialogType.info,
@@ -70,25 +79,34 @@ class AuthService {
       BuildContext context, String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      ); // Sign in with email and password
-      User? user = userCredential.user; // Get user from user credential
-      return UserModel(uid: user?.uid, email: user?.email, displayName: ''); // Return UserModel
+          email: email, password: password);
+
+      User? user = userCredential.user;
+      String uid = user?.uid ?? '';
+      String userEmail = user?.email ?? '';
+      String displayName = user?.displayName ?? '';
+      int phoneNumber = (user?.phoneNumber ?? 0) as int;
+
+      // Regular user flow
+      return UserModel(
+        uid: uid,
+        email: userEmail,
+        displayName: displayName,
+        phoneNumber: phoneNumber,
+      );
     } on FirebaseAuthException catch (e) {
       // Handle specific FirebaseAuthException errors
       String errorMessage = '';
       switch (e.code) {
         case 'user-not-found':
-          errorMessage = 'No user found with that email.'; // User not found error
+          errorMessage = 'No user found with that email.';
           break;
         case 'wrong-password':
-          errorMessage = 'Wrong password provided for that user.'; // Wrong password error
+          errorMessage = 'Wrong password provided for that user.';
           break;
         default:
-          errorMessage = 'An error occurred while signing in.'; // Default error message
+          errorMessage = 'An error occurred while signing in.';
       }
-      // Show error message dialog
       AwesomeDialog(
         context: context,
         dialogType: DialogType.info,
@@ -101,5 +119,14 @@ class AuthService {
     }
   }
 
-  signOut(BuildContext context) {}
+  //sign out
+  Future<UserModel?> signOut(BuildContext context) async {
+    try {
+      await _auth.signOut();
+      return null;
+    } catch (e) {
+      debugPrint('Error signing out: $e');
+      rethrow;
+    }
+  }
 }

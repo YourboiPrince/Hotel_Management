@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart'; // Import Flutter material library
-import 'package:hotel/presentation/authentication/widgets/logo.dart'; // Import logo widget
-import 'package:provider/provider.dart'; // Import Provider package
-import 'package:hotel/providers/auth_provider.dart'; // Import authentication provider
-import 'package:hotel/presentation/authentication/screens/profile_screen.dart'; // Import profile screen
+import 'package:flutter/material.dart';
+import 'package:hotel/presentation/authentication/widgets/logo.dart';
+import 'package:provider/provider.dart';
+import 'package:hotel/providers/auth_provider.dart';
+import 'package:hotel/presentation/authentication/screens/profile_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -12,13 +12,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _CreateUserScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController(); // Controller for email field
-  final TextEditingController _passwordController = TextEditingController(); // Controller for password field
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
-    _emailController.dispose(); // Dispose email controller
-    _passwordController.dispose(); // Dispose password controller
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -26,63 +26,78 @@ class _CreateUserScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'), // Set app bar title
+        title: const Text('Login'),
+        backgroundColor: Colors.purple,
       ),
       body: Center(
         child: Container(
           width: 450, // Setting width to 450px
+          padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color: Colors.purple, // Purple background color
+            color: Colors.purple[50], // Light purple background color
+            borderRadius: BorderRadius.circular(10),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const LogoWidget(), // Display logo widget
-                TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'Email', // Email text field
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const LogoWidget(),
+              const SizedBox(height: 16), // Add space between the logo and form fields
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  prefixIcon: const Icon(Icons.mail, color: Colors.purple),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(color: Colors.purple),
                   ),
                 ),
-                const SizedBox(height: 16), // SizedBox for spacing
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: const InputDecoration(
-                    labelText: 'Password', // Password text field
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  prefixIcon: const Icon(Icons.lock, color: Colors.purple),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(color: Colors.purple),
                   ),
-                  obscureText: true, // Hide password text
                 ),
-                ElevatedButton(
-                  onPressed: () async {
-                    String email = _emailController.text.trim(); // Get email input
-                    String password = _passwordController.text.trim(); // Get password input
-                    // Pass the current context to the AuthProvider
-                    await context
-                        .read<AuthProvider>()
-                        .signInWithEmailAndPassword(context, email, password);
-                    // Check if the user is signed in successfully
-                    if (context.read<AuthProvider>().user != null) {
-                      // Navigate to the profile screen
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ProfileScreen(),
-                        ),
-                      );
-                    }
-                  },
-                  child: const Text('Login'), // Login button
+                obscureText: true,
+              ),
+              const SizedBox(height: 16), // Add space between the password field and button
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
                 ),
-                 TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/admin');
-              },
-              child: const Text('Login as admin'),
-            ),
-              ],
-            ),
+                onPressed: () async {
+                  String email = _emailController.text.trim();
+                  String password = _passwordController.text.trim();
+                  await context.read<AuthProvider>().signInWithEmailAndPassword(context, email, password);
+                  if (context.read<AuthProvider>().user != null) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProfileScreen(),
+                      ),
+                    );
+                  }
+                },
+                child: const Text('Login'),
+              ),
+              const SizedBox(height: 16), // Add space between the login button and admin button
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/admin');
+                },
+                child: const Text('Login as admin'),
+              ),
+            ],
           ),
         ),
       ),
