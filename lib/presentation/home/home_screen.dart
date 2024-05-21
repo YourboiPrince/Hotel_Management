@@ -388,13 +388,13 @@ class MyHomePage extends StatelessWidget {
                       final hotel = provider.hotels[index];
                       return GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  HotelRoomsScreen(hotel: hotel, Hotel: hotel,),
-                            ),
-                          );
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                              HotelRoomsScreen(hotel: hotel),
+                          ),
+                        );
                         },
                         child: Card(
                           child: Column(

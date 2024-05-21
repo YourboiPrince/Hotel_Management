@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hotel/domain/models/hotel_model.dart';
 import 'package:hotel/presentation/home/room_details_screen.dart';
-// import 'package:hotel/presentation/home/room_details_screen.dart';
 
 class HotelRoomsScreen extends StatelessWidget {
   final Hotel hotel;
 
-  const HotelRoomsScreen({super.key, required this.hotel, required Type Hotel});
+  const HotelRoomsScreen({Key? key, required this.hotel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

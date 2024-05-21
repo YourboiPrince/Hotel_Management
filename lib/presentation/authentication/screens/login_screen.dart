@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hotel/presentation/authentication/widgets/logo.dart';
+import 'package:hotel/presentation/home/widgets/bottom_nav.dart';
 import 'package:provider/provider.dart';
 import 'package:hotel/providers/auth_provider.dart';
-import 'package:hotel/presentation/authentication/screens/profile_screen.dart';
+// import 'package:hotel/presentation/authentication/screens/profile_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -80,12 +81,8 @@ class _CreateUserScreenState extends State<LoginScreen> {
                   String password = _passwordController.text.trim();
                   await context.read<AuthProvider>().signInWithEmailAndPassword(context, email, password);
                   if (context.read<AuthProvider>().user != null) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ProfileScreen(),
-                      ),
-                    );
+                    Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => BottomBar()));
                   }
                 },
                 child: const Text('Login'),

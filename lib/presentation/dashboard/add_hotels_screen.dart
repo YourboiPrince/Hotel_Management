@@ -3,8 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:hotel/domain/models/hotel_model.dart';
 import 'package:hotel/domain/models/room_model.dart';
 import 'package:hotel/presentation/home/home_screen.dart';
-
-import '../../providers/hotel_provider.dart';
+import 'package:hotel/providers/hotel_provider.dart';
 
 class AddHotelScreen extends StatefulWidget {
   const AddHotelScreen({super.key});
@@ -45,22 +44,32 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Upload'),
+        backgroundColor: Colors.purple,
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          color: Colors.purple, // Set purple color as the background
-        ),
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
-          child: Center(
+      body: Center(
+        child: Container(
+          width: 450, // Set the width of the container
+          decoration: BoxDecoration(
+            color: Colors.purple[50], // Light purple background color
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20.0),
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextFormField(
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Name',
+                      prefixIcon: const Icon(Icons.hotel, color: Colors.purple),
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(color: Colors.purple),
+                      ),
                     ),
                     controller: nameController,
                     validator: (value) {
@@ -70,12 +79,17 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                       return null;
                     },
                   ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
+                  const SizedBox(height: 20.0),
                   TextFormField(
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Location',
+                      prefixIcon: const Icon(Icons.location_on, color: Colors.purple),
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(color: Colors.purple),
+                      ),
                     ),
                     controller: locationController,
                     validator: (value) {
@@ -85,25 +99,29 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                       return null;
                     },
                   ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
+                  const SizedBox(height: 20.0),
                   Slider(
                     value: rating,
                     min: 0.0,
                     max: 5.0,
                     divisions: 10,
+                    activeColor: Colors.purple,
                     label: 'Rating ($rating)',
                     onChanged: (newRating) {
                       setState(() => rating = newRating);
                     },
                   ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
+                  const SizedBox(height: 20.0),
                   TextFormField(
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Image URL',
+                      prefixIcon: const Icon(Icons.image, color: Colors.purple),
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(color: Colors.purple),
+                      ),
                     ),
                     controller: imageUrlController,
                     validator: (value) {
@@ -113,10 +131,14 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                       return null;
                     },
                   ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
+                  const SizedBox(height: 10.0),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
                     onPressed: () => showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -128,8 +150,15 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 TextFormField(
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     labelText: 'Room Type',
+                                    prefixIcon: const Icon(Icons.room, color: Colors.purple),
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: const BorderSide(color: Colors.purple),
+                                    ),
                                   ),
                                   controller: type,
                                   validator: (value) {
@@ -139,33 +168,34 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                                     return null;
                                   },
                                 ),
-                                const SizedBox(
-                                  height: 30.0,
-                                ),
+                                const SizedBox(height: 30.0),
                                 TextFormField(
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     labelText: 'Rate',
+                                    prefixIcon: const Icon(Icons.attach_money, color: Colors.purple),
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: const BorderSide(color: Colors.purple),
+                                    ),
                                   ),
                                   keyboardType: TextInputType.number,
-                                  controller: TextEditingController(
-                                      text: roomRate.toString()),
+                                  controller: TextEditingController(text: roomRate.toString()),
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Please enter room rate';
                                     }
                                     return null;
                                   },
-                                  onSaved: (newValue) =>
-                                      roomRate = double.parse(newValue!),
+                                  onSaved: (newValue) => roomRate = double.parse(newValue!),
                                 ),
-                                const SizedBox(
-                                  height: 30.0,
-                                ),
+                                const SizedBox(height: 30.0),
                                 SwitchListTile(
                                   title: const Text('Available'),
                                   value: isRoomAvailable,
-                                  onChanged: (value) =>
-                                      setState(() => isRoomAvailable = value),
+                                  onChanged: (value) => setState(() => isRoomAvailable = value),
+                                  activeColor: Colors.purple,
                                 ),
                               ],
                             ),
@@ -176,7 +206,10 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                               child: const Text('Cancel'),
                             ),
                             TextButton(
-                              onPressed: addNewRoom,
+                              onPressed: () {
+                                addNewRoom();
+                                Navigator.pop(context);
+                              },
                               child: const Text('Add'),
                             ),
                           ],
@@ -185,6 +218,7 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                     ),
                     child: const Text('Add Room'),
                   ),
+                  const SizedBox(height: 10.0),
                   const Text('Rooms:'),
                   ListView.builder(
                     shrinkWrap: true,
@@ -197,7 +231,14 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                       );
                     },
                   ),
+                  const SizedBox(height: 20.0),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         String name = nameController.text;
