@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hotel/presentation/authentication/widgets/logo.dart';
 import 'package:provider/provider.dart';
 import 'package:hotel/providers/admin_provider.dart';
+import 'view_bookings.dart'; 
 
 class AdminScreen extends StatelessWidget {
   AdminScreen({Key? key}) : super(key: key);
@@ -15,18 +16,29 @@ class AdminScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Admin'),
         backgroundColor: Colors.purple,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.book),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BookingsScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Container(
           width: 450, // Set the width of the container
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color: Colors.purple[50], // Light purple background color
+            color: Colors.purple[50], 
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center, // Center the form vertically
+            mainAxisAlignment: MainAxisAlignment.center, 
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const LogoWidget(),

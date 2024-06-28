@@ -69,7 +69,7 @@ class Hotel extends StatelessWidget {
         '/admin': (context) => AdminScreen(),
         '/addHotels': (context) => const AddHotelScreen(), // Profile screen
         '/bookings': (context) => const BookingsScreen(), // Bookings screen
-        '/checkout': (context) => const CheckoutScreen.CheckoutScreen(bookedRooms: []),
+        // '/checkout': (context) => CheckoutScreen.CheckoutScreen(bookedRooms: [])
       },
     );
   }
