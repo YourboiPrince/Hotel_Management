@@ -49,7 +49,7 @@ app.post('/initiate-payment', async (req, res) => {
       PhoneNumber: phoneNumber,
       CallBackURL: 'https://ca07-102-167-171-239.ngrok-free.app', // 
       AccountReference: 'Hotel',
-      TransactionDesc: 'Hotel Room Payment',
+      TransactionDesc: 'Hotel Room booking',
     }, {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
