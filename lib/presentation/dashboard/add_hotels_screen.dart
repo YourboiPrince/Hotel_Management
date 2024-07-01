@@ -4,6 +4,7 @@ import 'package:hotel/domain/models/hotel_model.dart';
 import 'package:hotel/domain/models/room_model.dart';
 import 'package:hotel/presentation/home/home_screen.dart';
 import 'package:hotel/providers/hotel_provider.dart';
+import 'package:hotel/presentation/home/view_bookings.dart';
 
 class AddHotelScreen extends StatefulWidget {
   const AddHotelScreen({super.key});
@@ -268,6 +269,16 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => BookingsScreen()), // Navigate to the BookingsScreen
+          );
+        },
+        child: Icon(Icons.book),
+        backgroundColor: Colors.purple,
       ),
     );
   }
